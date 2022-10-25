@@ -55,10 +55,10 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", getMovies).Methods("GET")
-	r.HandleFunc("/:id", getMovie).Methods("GET")
-	r.HandleFunc("/:id", createMovie).Methods("POST")
-	r.HandleFunc("/:id", updateMovie).Methods("PATCH")
-	r.HandleFunc("/:id", deleteMovie).Methods("DELETE")
+	r.HandleFunc("/{id}", getMovie).Methods("GET")
+	r.HandleFunc("/{id}", createMovie).Methods("POST")
+	r.HandleFunc("/{id}", updateMovie).Methods("PATCH")
+	r.HandleFunc("/{id}", deleteMovie).Methods("DELETE")
 
 	fmt.Printf("Starting server at port 8000\n")
 	log.Fatal(http.ListenAndServe(":8000", r))
