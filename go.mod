@@ -1,4 +1,4 @@
-module github.com/matahariramadhan/go-movies-listing-webapp
+module github.com/matahariramadhan/go-movies-listing-api
 
 go 1.19
 
