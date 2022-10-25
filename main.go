@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -20,9 +21,18 @@ type Director struct {
 	LastName  string `json:"lastName"`
 }
 
-var Movies []Movie
+var Directors = []Director{
+	{FirstName: "Matahari", LastName: "Ramadhan"},
+	{FirstName: "Iqbal", LastName: "Adudu"},
+}
+
+var Movies = []Movie{
+	{ID: "1", Isbn: "43210", Title: "Movie 1", Director: Directors[0]},
+}
 
 func getMovies(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(Movies)
 }
 
 func getMovie(w http.ResponseWriter, r *http.Request) {
