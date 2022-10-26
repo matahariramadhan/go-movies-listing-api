@@ -60,7 +60,22 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateMovie(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
+	params := mux.Vars(r)
+
+	for index, item := range Movies {
+		if item.ID == params["id"] {
+			Movies = append(Movies[:index], Movies[index+1:]...)
+
+			var movie Movie
+			_ = json.NewDecoder(r.Body).Decode(&movie)
+			movie.ID = params["id"]
+			Movies = append(Movies, movie)
+			json.NewEncoder(w).Encode(movie)
+			return
+		}
+	}
 }
 
 func deleteMovie(w http.ResponseWriter, r *http.Request) {
@@ -82,7 +97,7 @@ func main() {
 	r.HandleFunc("/", getMovies).Methods("GET")
 	r.HandleFunc("/{id}", getMovie).Methods("GET")
 	r.HandleFunc("/", createMovie).Methods("POST")
-	r.HandleFunc("/{id}", updateMovie).Methods("PATCH")
+	r.HandleFunc("/{id}", updateMovie).Methods("PUT")
 	r.HandleFunc("/{id}", deleteMovie).Methods("DELETE")
 
 	fmt.Printf("Starting server at port 8000\n")
